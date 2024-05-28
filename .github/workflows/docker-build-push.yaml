@@ -25,8 +25,8 @@ jobs:
           - linux/amd64
           - linux/arm64
         distro:
-          - alpine
-          - bullseye
+          - 15-alpine
+          - 15-bullseye
     permissions:
       contents: read
       packages: write
@@ -96,8 +96,8 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          - alpine
-          - bullseye
+          - 15-alpine
+          - 15-bullseye
     needs:
       - buildx
     steps:
