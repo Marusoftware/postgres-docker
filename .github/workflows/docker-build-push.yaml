@@ -73,7 +73,8 @@ jobs:
           outputs: type=image,name=ghcr.io/${{env.REPO}},push-by-digest=true,name-canonical=true,push=true
       - name: Export digest
         run: |
-          mkdir -p ./digests/${{ matrix.distro }}
+          rm -rf ./digests/
+          mkdir -p ./digests/
           digest="${{ steps.build.outputs.digest }}"
           touch "./digests/${digest#sha256:}"
       - name: Upload digest
@@ -100,9 +101,10 @@ jobs:
     needs:
       - buildx
     steps:
-      - name: Set lower case owner name
+      - name: Set lower case owner name and cleanup
         run: |
           echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+          rm -rf ./digests
         env:
           OWNER: '${{ github.repository_owner }}'
       - name: Download digests
